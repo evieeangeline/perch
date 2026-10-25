@@ -117,21 +117,15 @@ struct RootView: View {
             .transition(.opacity)
     }
 
-    /// Solid black across the notch band so the shape reads as part of the
-    /// camera housing, fading softly to translucent below it at rest; a solid
-    /// layer fades in over the top when expanded.
+    /// At rest the whole shape, notch band included, is one even tint over
+    /// frosted glass (or solid black); a solid layer fades in over the top
+    /// when expanded.
     private var background: some View {
         ZStack(alignment: .top) {
-            VStack(spacing: 0) {
-                Color.black.frame(height: layout.notchHeight)
-                LinearGradient(
-                    colors: [.black, .black.opacity(restingOpacity)],
-                    startPoint: .top,
-                    endPoint: .bottom
-                )
-                .frame(height: 18)
-                Color.black.opacity(restingOpacity)
+            if settings.glanceTranslucent {
+                FrostedBackground()
             }
+            Color.black.opacity(restingOpacity)
             Color.black.opacity(expanded ? 1 : 0)
         }
     }

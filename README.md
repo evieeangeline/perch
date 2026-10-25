@@ -53,8 +53,8 @@ test either of those.
 
 - Your first three tasks show under the notch, with a "+N more" row if there
   are others. With no tasks it shrinks to a thin lip around the notch.
-- By default the glance is translucent. You can make it solid, or change its
-  opacity, in Settings.
+- By default the glance is frosted glass with a dark tint. You can make it
+  solid black, or change how dark the tint is, in Settings.
 
 ### Expanded (hover)
 
@@ -86,7 +86,7 @@ Open Settings with the gear icon in the expanded panel, or from the menu bar
 icon → Settings… (⌘,).
 
 - **Startup:** Launch Perch at login; Start expanded
-- **Appearance:** translucent or solid glance, glance opacity, and where
+- **Appearance:** translucent (frosted) or solid glance, tint strength, and where
   Perchie appears (None, Hanging, or Top of screen next to the camera)
 - **Completed tasks:** how many recent completed tasks to show (3–15)
   before the rest go under "Show all completed"; Clear completed history

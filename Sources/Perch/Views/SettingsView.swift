@@ -27,7 +27,7 @@ struct SettingsView: View {
                 .pickerStyle(.segmented)
 
                 if settings.glanceTranslucent {
-                    LabeledContent("Opacity") {
+                    LabeledContent("Tint") {
                         HStack {
                             Slider(value: $settings.glanceOpacity, in: 0.2...0.9)
                             Text("\(Int((settings.glanceOpacity * 100).rounded()))%")
