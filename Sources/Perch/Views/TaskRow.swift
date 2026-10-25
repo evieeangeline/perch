@@ -23,7 +23,9 @@ struct TaskRow: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
-            HStack(spacing: 8) {
+            // Long titles wrap, so keep the checkbox and actions on the
+            // first line rather than centred on the whole block.
+            HStack(alignment: .firstTextBaseline, spacing: 8) {
                 Button(action: onToggle) {
                     Image(systemName: "circle")
                         .foregroundColor(.white.opacity(0.5))
@@ -94,10 +96,12 @@ struct TaskRow: View {
     /// a single click puts the caret where you click and clicking another
     /// task moves straight into editing it. A faint highlight on hover (and
     /// the text cursor) hints that it's editable; it's a little stronger
-    /// while editing. Return or clicking away saves, Escape reverts.
+    /// while editing. Return or clicking away saves, Escape reverts. Long
+    /// titles wrap onto as many lines as they need.
     private var titleArea: some View {
-        TextField("", text: $titleDraft)
+        TextField("", text: $titleDraft, axis: .vertical)
             .textFieldStyle(.plain)
+            .lineLimit(1...)
             .font(.system(size: 13))
             .foregroundColor(.white.opacity(titleFocused ? 1 : 0.9))
             .focused($titleFocused)
@@ -112,7 +116,11 @@ struct TaskRow: View {
             }
             .onChange(of: titleFocused) { focused in
                 guard !focused else { return }
-                let trimmed = titleDraft.trimmingCharacters(in: .whitespacesAndNewlines)
+                // A title is one line of text, even if a newline was pasted in.
+                let trimmed = titleDraft
+                    .components(separatedBy: .newlines)
+                    .joined(separator: " ")
+                    .trimmingCharacters(in: .whitespaces)
                 if trimmed.isEmpty {
                     titleDraft = task.title
                 } else if trimmed != task.title {
@@ -177,7 +185,7 @@ struct CompletedTaskRow: View {
     }
 
     var body: some View {
-        HStack(spacing: 8) {
+        HStack(alignment: .firstTextBaseline, spacing: 8) {
             Button(action: onToggle) {
                 Image(systemName: "checkmark.circle.fill")
                     .foregroundColor(.green.opacity(0.8))
